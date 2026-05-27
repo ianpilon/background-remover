@@ -31,11 +31,34 @@
   button:hover { border-color: var(--accent); }
   button:disabled { opacity: 0.5; cursor: not-allowed; }
   .drop {
-    border: 2px dashed var(--border); border-radius: 14px; padding: 56px 24px;
+    border: 2px dashed var(--accent); border-radius: 14px; padding: 56px 24px;
     text-align: center; background: var(--panel); transition: 0.15s ease;
     cursor: pointer;
+    flex: 1; min-width: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
   }
-  .drop:hover, .drop.over { border-color: var(--accent); background: var(--panel-2); }
+  .hero-row {
+    display: flex; gap: 16px; align-items: stretch;
+  }
+  .under-drop {
+    padding-left: calc(37.5% + 16px);
+  }
+  .hero-img {
+    flex: 0 0 auto; max-width: 37.5%; height: auto; border-radius: 14px;
+    border: 1px solid var(--border); object-fit: contain; background: var(--panel);
+  }
+  @media (max-width: 720px) {
+    .hero-row { flex-direction: column; }
+    .hero-img { max-width: 100%; }
+    .under-drop { padding-left: 0; }
+  }
+  .drop:hover, .drop.over {
+    border-style: solid;
+    border-color: var(--accent);
+    background: var(--panel-2);
+    box-shadow: 0 0 0 4px rgba(124, 92, 255, 0.18), 0 8px 24px rgba(124, 92, 255, 0.15);
+    transform: translateY(-1px);
+  }
   .drop p { margin: 0; color: var(--muted); }
   .drop strong { color: var(--text); }
   .status { margin: 16px 0; font-size: 13px; color: var(--muted); min-height: 20px; }
@@ -84,14 +107,19 @@
     <button id="clear" type="button">Clear results</button>
   </div>
 
-  <div id="drop" class="drop" tabindex="0">
-    <p><strong>Drop images here</strong>, or click to choose</p>
-    <p style="font-size:12px;margin-top:6px;">PNG, JPG, WEBP. Multiple at once is fine.</p>
-    <input type="file" id="file" accept="image/*" multiple hidden />
+  <div class="hero-row">
+    <img class="hero-img" src="./screenshot.png" alt="Background removal example: pilot photo with original background and with transparent background" />
+    <div id="drop" class="drop" tabindex="0">
+      <p><strong>Drop images here</strong>, or click to choose</p>
+      <p style="font-size:12px;margin-top:6px;">PNG, JPG, WEBP. Multiple at once is fine.</p>
+      <input type="file" id="file" accept="image/*" multiple hidden />
+    </div>
   </div>
 
-  <div id="status" class="status"></div>
-  <div id="bar" class="bar" style="display:none;"><span></span></div>
+  <div class="under-drop">
+    <div id="status" class="status"></div>
+    <div id="bar" class="bar" style="display:none;"><span></span></div>
+  </div>
 
   <div id="results" class="grid"></div>
 
